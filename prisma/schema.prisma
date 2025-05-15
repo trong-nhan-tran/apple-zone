@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model banners {
+  id          Int         @id @default(autoincrement())
+  created_at  DateTime    @default(now()) @db.Timestamptz(6)
+  url         String
+  direct_link String?
+  category_id Int?
+  categories  categories? @relation(fields: [category_id], references: [id], onUpdate: NoAction, map: "banner_images_category_id_fkey")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model categories {
+  id               Int             @id(map: "category_pkey") @default(autoincrement())
+  created_at       DateTime        @default(now()) @db.Timestamptz(6)
+  name             String          @unique(map: "category_name_key")
+  slug             String          @unique
+  parent_id        Int?
+  banners          banners[]
+  categories       categories?     @relation("categoriesTocategories", fields: [parent_id], references: [id], onUpdate: NoAction, map: "categories_parent_fkey")
+  other_categories categories[]    @relation("categoriesTocategories")
+  product_items    product_items[]
+  products         products[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model order_items {
+  id              Int            @id @default(autoincrement())
+  created_at      DateTime       @default(now()) @db.Timestamptz(6)
+  product_name    String
+  color_name      String
+  option_name     String
+  price           Decimal        @db.Decimal
+  quantity        Int            @default(1)
+  product_item_id Int?
+  order_id        Int?
+  option_value    String?
+  orders          orders?        @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product_items   product_items? @relation(fields: [product_item_id], references: [id], onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model orders {
+  id             Int           @id @default(autoincrement())
+  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  customer_name  String
+  customer_phone String
+  address        String
+  status         String        @default("đang xử lí")
+  customer_email String?
+  province       String?
+  district       String?
+  ward           String?
+  order_items    order_items[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model product_colors {
+  id         Int      @id(map: "images_pkey") @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  images     String[]
+  color_name String
+  product_id Int
+  thumbnail  String?
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "product_images_product_id_fkey")
+  stocks     stocks[]
+
+  @@unique([product_id, color_name])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model product_items {
+  id           Int           @id(map: "product_pkey") @default(autoincrement())
+  created_at   DateTime      @default(now()) @db.Timestamptz(6)
+  name         String        @unique(map: "product_name_key")
+  price        Int
+  slug         String        @unique(map: "products_slug_key")
+  option_name  String?
+  option_value String?
+  product_id   Int?
+  category_id  Int?
+  thumbnail    String?
+  order_items  order_items[]
+  categories   categories?   @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products     products?     @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  stocks       stocks[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model products {
+  id             Int              @id(map: "product_series_pkey") @default(autoincrement())
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  name           String
+  category_id    Int?
+  thumbnail      String?
+  description    String?
+  product_colors product_colors[]
+  product_items  product_items[]
+  categories     categories?      @relation(fields: [category_id], references: [id], onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model stocks {
+  id               Int             @id @default(autoincrement())
+  created_at       DateTime        @default(now()) @db.Timestamptz(6)
+  product_color_id Int?
+  product_item_id  Int?
+  stock            Int?
+  product_colors   product_colors? @relation(fields: [product_color_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product_items    product_items?  @relation(fields: [product_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
