@@ -18,6 +18,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui-shadcn/sidebar";
+import Link from "next/link";
 
 export function NavMain({
   items,
@@ -81,9 +82,9 @@ export function NavMain({
                               pathname === subItem.url ? true : undefined
                             }
                           >
-                            <a href={subItem.url}>
+                            <Link href={subItem.url}>
                               <span>{subItem.title}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
@@ -101,10 +102,10 @@ export function NavMain({
                   tooltip={item.title}
                   data-active={isActive ? true : undefined}
                 >
-                  <a href={item.url}>
+                  <Link href={item.url}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );

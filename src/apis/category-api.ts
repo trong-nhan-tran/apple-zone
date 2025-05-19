@@ -40,6 +40,7 @@ class CategoryApi {
   async create(data: CategoryInputType): Promise<ApiResponse<any>> {
     const response = await axios.post<ApiResponse<any>>(this.API_URL, data, {
       headers: this.getAuthHeaders(),
+      withCredentials: true,
     });
     return response.data;
   }

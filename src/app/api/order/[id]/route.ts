@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { orderService } from "@/services";
 import { errorResponse } from "@/libs/api-response";
-import { adminAuthMiddleware } from "@/middlewares/admin-middleware";
+import { adminAuthMiddleware } from "@/utils/supabase/admin-middleware";
 
 export async function GET(
   request: NextRequest,
@@ -17,9 +17,9 @@ export async function GET(
     const result = await orderService.getById(id, {
       order_items: {
         include: {
-          product_items: true
-        }
-      }
+          product_items: true,
+        },
+      },
     });
     return NextResponse.json(result, { status: result.status });
   } catch (error: any) {

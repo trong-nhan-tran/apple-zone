@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { productItemService } from "@/services";
 import { errorResponse } from "@/libs/api-response";
-import { adminAuthMiddleware } from "@/middlewares/admin-middleware";
+import { adminAuthMiddleware } from "@/utils/supabase/admin-middleware";
 import prisma from "@/libs/prisma";
 
 export async function GET(

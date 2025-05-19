@@ -1,3 +1,4 @@
+"use client";
 import { SidebarAdmin } from "@/components/layout/sidebar-admin";
 import { SidebarInset, SidebarProvider } from "@/components/ui-shadcn/sidebar";
 

@@ -1,91 +1,53 @@
 "use client";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "@/libs/supabase";
-import { useState } from "react";
+import { login } from "@/actions/auth";
+import { Card, CardTitle } from "@/components/ui-shadcn/card";
+import { Button } from "@/components/ui-shadcn/button";
+import { Input } from "@/components/ui-shadcn/input";
+import { Label } from "@/components/ui-shadcn/label";
 
-export default function Page() {
-  const [view, setView] = useState<any>("sign_in");
+import toast from "react-hot-toast";
+import { useEffect, useActionState } from "react";
 
-  const getTitle = (view: any) => {
-    switch (view) {
-      case "sign_in":
-        return "Đăng nhập";
-      case "sign_up":
-        return "Đăng ký";
-      case "forgotten_password":
-        return "Quên mật khẩu";
-      case "update_password":
-        return "Cập nhật mật khẩu";
-      default:
-        return "Xác thực";
+export default function LoginPage() {
+  const [state, formActions] = useActionState(login, { success: false });
+  useEffect(() => {
+    if (state?.error) {
+      toast.error(state.error);
     }
-  };
-
+  }, [state]);
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm bg-white p-5 rounded-2xl text-black">
-        <h1 className="text-2xl font-bold text-center mb-5">
-          {getTitle(view)}
-        </h1>
+      <Card className="w-full max-w-sm p-6">
+        <CardTitle className="text-center">
+          <h2 className="text-2xl font-bold text-center">Đăng nhập</h2>
+        </CardTitle>
 
-        <Auth
-          supabaseClient={supabase}
-          appearance={{ theme: ThemeSupa }}
-          theme="light"
-          providers={["github"]}
-          socialLayout="horizontal"
-          redirectTo="/admin"
-          view={view}
-          showLinks={false} // Tắt nút mặc định như "Don't have an account? Sign up"
-        />
-
-        <div className="text-center mt-4 text-sm">
-          {view === "sign_in" && (
-            <>
-              <button
-                className="text-blue-600 underline"
-                onClick={() => setView("forgotten_password")}
-              >
-                Quên mật khẩu?
-              </button>
-              <p className="mt-2">
-                Chưa có tài khoản?{" "}
-                <button
-                  className="text-blue-600 underline"
-                  onClick={() => setView("sign_up")}
-                >
-                  Đăng ký
-                </button>
-              </p>
-            </>
-          )}
-
-          {view === "sign_up" && (
-            <p>
-              Đã có tài khoản?{" "}
-              <button
-                className="text-blue-600 underline"
-                onClick={() => setView("sign_in")}
-              >
-                Đăng nhập
-              </button>
-            </p>
-          )}
-
-          {view === "forgotten_password" && (
-            <p>
-              Nhớ mật khẩu rồi?{" "}
-              <button
-                className="text-blue-600 underline"
-                onClick={() => setView("sign_in")}
-              >
-                Quay lại đăng nhập
-              </button>
-            </p>
-          )}
-        </div>
-      </div>
+        <form action={formActions} className="space-y-4">
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              className="h-10"
+              id="email"
+              name="email"
+              type="email"
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="password">Mật khẩu</Label>
+            <Input
+              className="h-10"
+              id="password"
+              name="password"
+              type="password"
+              required
+            />
+          </div>
+          <Button type="submit" className="w-full py-5">
+            Đăng nhập
+          </Button>
+        </form>
+      </Card>
     </div>
   );
 }

@@ -6,8 +6,6 @@ import {
   ShoppingCart,
   Package,
   ImageIcon,
-  Users,
-  Settings2,
   Layers,
   Grid3X3,
 } from "lucide-react";
@@ -21,14 +19,9 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui-shadcn/sidebar";
+import { getProfile } from "@/actions/auth";
 
-// Admin navigation data structure based on NavMainAdmin
 const adminNavData = {
-  user: {
-    name: "Admin",
-    email: "admin@apple-zone.com",
-    avatar: "/images/avatars/admin.jpg",
-  },
   navMain: [
     {
       title: "Tổng quan",
@@ -60,26 +53,40 @@ const adminNavData = {
       url: "/admin/banner",
       icon: ImageIcon,
     },
-    {
-      title: "Tài khoản",
-      url: "/admin/user",
-      icon: Users,
-    },
-    {
-      title: "Cài đặt",
-      url: "/admin/settings",
-      icon: Settings2,
-    },
   ],
 };
 
 export function SidebarAdmin({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const [user, setUser] = React.useState<any>(null);
+  async function fetchUser() {
+    const res = await getProfile();
+    if (res && res) {
+      setUser({
+        name: res.full_name || "Chưa có tên",
+        email: res.email,
+        avatar: res.avatar_url || "/images/avatars/admin.jpg",
+      });
+    }
+  }
+
+  React.useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <NavUser user={adminNavData.user} />
+        <NavUser
+          user={
+            user || {
+              name: "Admin",
+              email: "admin@apple-zone.com",
+              avatar: "/images/avatars/admin.jpg",
+            }
+          }
+        />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={adminNavData.navMain} />

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { orderService } from "@/services";
 import { errorResponse } from "@/libs/api-response";
-import { adminAuthMiddleware } from "@/middlewares/admin-middleware";
+import { adminAuthMiddleware } from "@/utils/supabase/admin-middleware";
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
       : 10;
 
     const whereClause: any = {};
-    
+
     if (status) {
       whereClause.status = status;
     }
@@ -40,20 +40,24 @@ export async function GET(request: NextRequest) {
             contains: keyword.trim(),
             mode: "insensitive",
           },
-        }
+        },
       ];
     }
 
-    const result = await orderService.getAll(whereClause, {
-      page,
-      pageSize,
-    }, { 
-      order_items: {
-        include: {
-          product_items: true
-        }
+    const result = await orderService.getAll(
+      whereClause,
+      {
+        page,
+        pageSize,
+      },
+      {
+        order_items: {
+          include: {
+            product_items: true,
+          },
+        },
       }
-    });
+    );
 
     return NextResponse.json(result, { status: result.status });
   } catch (error: any) {
