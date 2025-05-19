@@ -13,11 +13,12 @@ import {
 import { ProductCardType, ProductItemType } from "@/schemas";
 import prisma from "@/libs/prisma";
 
-export default async function CategoryPage({
-  params,
-}: {
+type Props = {
   params: { slug: string };
-}) {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function CategoryPage({ params }: Props) {
   const { slug } = params;
 
   let isParentCategory: boolean | null = null;
