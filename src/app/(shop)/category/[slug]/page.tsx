@@ -13,6 +13,7 @@ import {
 import { ProductCardType, ProductItemType } from "@/schemas";
 import prisma from "@/libs/prisma";
 
+// @ts-ignore
 type Props = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
