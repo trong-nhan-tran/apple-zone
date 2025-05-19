@@ -2,10 +2,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import CartIcon from "./cart-icon";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const NavBar = ({}: Props) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
@@ -50,7 +52,7 @@ const NavBar = ({}: Props) => {
       ].slice(0, 5);
       setSearchHistory(newHistory);
       localStorage.setItem("searchHistory", JSON.stringify(newHistory));
-      console.log("Searching for:", searchTerm);
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
       setShowHistory(false);
     }
   };

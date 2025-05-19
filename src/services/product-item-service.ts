@@ -69,6 +69,19 @@ class ProductItemService extends BaseService<
     }
     return successResponse(result, "Got");
   }
+
+  async searchProducts(query: string): Promise<ApiResponse<any>> {
+    const result = await this.model.findMany({
+      where: {
+        name: {
+          contains: query,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    return successResponse(result, "Search results");
+  }
 }
 
 export const productItemService = new ProductItemService();
