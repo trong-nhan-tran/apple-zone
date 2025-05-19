@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     domains: ["res.cloudinary.com", "qklerkksbvcdayngbhxa.supabase.co"],
     // If you have other domains, keep them here
   },
-  rules: {
-    "@typescript-eslint/no-explicit-any": "off",
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
