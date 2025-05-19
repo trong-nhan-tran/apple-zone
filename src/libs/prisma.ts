@@ -1,10 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
-// Tránh tạo nhiều instance trong development
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+declare global {
+  var prisma: PrismaClient | undefined;
+}
 
-export const prisma = globalForPrisma.prisma || new PrismaClient();
+const prisma =
+  global.prisma ||
+  new PrismaClient({
+    log: ["query", "error", "warn"],
+  });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") {
+  global.prisma = prisma;
+}
 
 export default prisma;
