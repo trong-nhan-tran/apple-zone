@@ -25,7 +25,7 @@ export function TableHeader({
   const hasAddNew = onAddNew !== undefined;
 
   return (
-    <div className="bg-white px-3 py-4 shadow-sm sm:flex justify-between items-center">
+    <div className="bg-white px-3 py-3 shadow-sm sm:flex justify-between items-center">
       <div className="flex items-center gap-3 sm:mb-0 mb-2">
         <SidebarTrigger className="" />
         <h1 className="text-lg font-medium text-gray-800">{title}</h1>

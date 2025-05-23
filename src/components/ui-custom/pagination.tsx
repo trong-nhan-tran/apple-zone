@@ -89,7 +89,7 @@ export function Pagination({
   return (
     <div className="bg-white border-t border-gray-200 py-1">
       <div className="container mx-auto px-4">
-        <div className="py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="py-2 flex flex-col sm:flex-row justify-between items-center gap-4">
           {/* Info section */}
           <div className="text-sm text-gray-600 font-medium">
             <span className="hidden sm:inline">Hiển thị </span>

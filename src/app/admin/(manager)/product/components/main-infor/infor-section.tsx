@@ -14,6 +14,7 @@ import {
 import { categoryApi, productApi } from "@/apis";
 import { storageService } from "@/services/storage-service";
 import RichTextEditor from "./rich-text-editor";
+import FormActions from "@/components/ui-custom/form-actions";
 
 import { Form } from "@/components/ui-shadcn/form";
 import { Button } from "@/components/ui-shadcn/button";
@@ -174,10 +175,8 @@ export default function GeneralInfo({
               name="thumbnail"
               label="Ảnh đại diện"
               folder="thumbnails"
-              aspectRatio="4/3"
               onFileChange={handleFileChange}
-              previewHeight="h-[180px]"
-              previewWidth="w-[180px]"
+              size="w-[300px] h-[300px]"
             />
           </div>
 
@@ -191,28 +190,11 @@ export default function GeneralInfo({
           </div>
         </div>
 
-        <div className="flex justify-end gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setOpen(false)}
-            disabled={loading}
-          >
-            Huỷ
-          </Button>
-          <Button
-            type="submit"
-            disabled={loading || loadingParents}
-            className="relative"
-          >
-            {loading && (
-              <span className="absolute inset-0 flex items-center justify-center">
-                <i className="bi bi-arrow-repeat animate-spin text-white"></i>
-              </span>
-            )}
-            <span className={loading ? "opacity-0" : ""}>Lưu</span>
-          </Button>
-        </div>
+        <FormActions
+          loading={loading || isSubmitting}
+          onCancel={() => setOpen(false)}
+          showCancel={!!setOpen}
+        />
       </form>
     </Form>
   );

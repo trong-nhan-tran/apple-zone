@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import FormActions from "@/components/ui-custom/form-actions";
 
 import { Button } from "@/components/ui-shadcn/button";
 import { Form } from "@/components/ui-shadcn/form";
@@ -183,8 +184,7 @@ const ColorImagesForm = ({
             label="Ảnh đại diện"
             onFileChange={handleThumbnailChange}
             folder="color-thumbnails"
-            previewHeight="h-[200px]"
-            previewWidth="w-[200px]"
+            size="w-[200px] h-[200px]"
           />
 
           <InputImageMultiple
@@ -197,25 +197,11 @@ const ColorImagesForm = ({
             previewHeight="h-[150px]"
           />
 
-          {/* Action Buttons */}
-          <div className="flex justify-end gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpen(false)}
-              disabled={isSubmitting}
-            >
-              Hủy
-            </Button>
-            <Button type="submit" disabled={loading} className="relative">
-              {loading && (
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <i className="bi bi-arrow-repeat animate-spin text-white"></i>
-                </span>
-              )}
-              <span className={loading ? "opacity-0" : ""}>Lưu</span>
-            </Button>
-          </div>
+          <FormActions
+            loading={loading || isSubmitting}
+            onCancel={() => setOpen(false)}
+            showCancel={true}
+          />
         </form>
       </Form>
     </SimpleModal>

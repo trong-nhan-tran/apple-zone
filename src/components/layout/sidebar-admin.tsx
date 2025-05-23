@@ -66,7 +66,7 @@ export function SidebarAdmin({
       setUser({
         name: res.full_name || "Chưa có tên",
         email: res.email,
-        avatar: res.avatar_url || "/images/avatars/admin.jpg",
+        avatar: res.avatar_url || "",
       });
     }
   }
@@ -83,7 +83,7 @@ export function SidebarAdmin({
             user || {
               name: "Admin",
               email: "admin@apple-zone.com",
-              avatar: "/images/avatars/admin.jpg",
+              avatar: "",
             }
           }
         />

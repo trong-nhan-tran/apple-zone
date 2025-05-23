@@ -1,6 +1,6 @@
 import { productItemService } from "@/services/product-item-service";
 import ProductItemCard from "@/components/features/ProductItemCard";
-import Filter from "@/components/features/Filter";
+import Filter from "@/components/layout/shop-filter";
 import { product_items } from "@prisma/client";
 
 type Props = {

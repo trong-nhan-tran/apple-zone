@@ -66,44 +66,39 @@ const ProductItemForm = ({
       }
       className="max-w-4xl bg-white min-h-fit overflow-y-auto"
     >
-      <div className="mt-4">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="general">
-              <span className="flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Thông tin chung
-              </span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="stocks"
-              disabled={!currentProductItem?.id && !editMode}
-            >
-              <span className="flex items-center gap-2">
-                <Package className="h-4 w-4" />
-                Quản lý tồn kho
-              </span>
-            </TabsTrigger>
-          </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="general">
+            <span className="flex items-center gap-2">
+              <Info className="h-4 w-4" />
+              Thông tin chung
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="stocks"
+            disabled={!currentProductItem?.id && !editMode}
+          >
+            <span className="flex items-center gap-2">
+              <Package className="h-4 w-4" />
+              Quản lý tồn kho
+            </span>
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="general" className="pt-4">
-            <InfoSection
-              productItem={itemToEdit}
-              onSuccess={handleInfoSectionSuccess}
-              editMode={editMode}
-              open={open}
-              productId={productId}
-            />
-          </TabsContent>
+        <TabsContent value="general" className="pt-4">
+          <InfoSection
+            productItem={itemToEdit}
+            onSuccess={handleInfoSectionSuccess}
+            editMode={editMode}
+            open={open}
+            productId={productId}
+          />
+        </TabsContent>
 
-          <TabsContent value="stocks" className="pt-4">
-            <StockTable
-              productItem={itemToEdit || null}
-              onSuccess={onSuccess}
-            />
-          </TabsContent>
-        </Tabs>
-      </div>
+        <TabsContent value="stocks" className="pt-4">
+          <StockTable productItem={itemToEdit || null} onSuccess={onSuccess} />
+        </TabsContent>
+      </Tabs>
     </SimpleModal>
   );
 };

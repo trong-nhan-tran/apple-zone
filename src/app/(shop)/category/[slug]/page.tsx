@@ -1,5 +1,5 @@
 import React from "react";
-import Filter from "@/components/features/Filter";
+import Filter from "@/components/layout/shop-filter";
 import ProductCard from "@/components/features/ProductCard";
 import ProductItemCard from "@/components/features/ProductItemCard";
 import ShopBanner from "@/components/features/ShopBanner";
@@ -131,7 +131,7 @@ export default async function CategoryPage({ params }: Props) {
   }
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {category && (
         <>
           <ShopBanner
@@ -143,7 +143,7 @@ export default async function CategoryPage({ params }: Props) {
       )}
 
       <Filter />
-      <div className="grid mx-4 md:mx-0 grid-cols-2 md:grid-cols-3 gap-4 mt-10 ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {error ? (
           <div className="col-span-full text-center py-10 text-red-500">
             {error}
@@ -162,7 +162,7 @@ export default async function CategoryPage({ params }: Props) {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

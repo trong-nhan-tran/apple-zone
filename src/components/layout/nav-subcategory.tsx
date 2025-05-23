@@ -16,7 +16,7 @@ const NavSubcategory = ({ navItems = [], parentSlug = null }: Props) => {
   if (!navItems.length) return null;
 
   return (
-    <div className="flex gap-8 mt-10">
+    <div className="mx-4 sm:mx-0 flex flex-wrap gap-3 md:gap-4 mt-6 md:mt-10">
       {parentSlug && (
         <NavSubcategoryLink href={`/category/${parentSlug}`} name="Tất cả" />
       )}

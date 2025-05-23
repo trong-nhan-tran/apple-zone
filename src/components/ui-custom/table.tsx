@@ -53,7 +53,7 @@ export function DataTable<T>({
             {columns?.map((column, index) => (
               <th
                 key={column.id || column.accessorKey || index}
-                className="whitespace-nowrap px-4 py-3 text-left font-medium text-gray-900"
+                className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900"
               >
                 {column.header}
               </th>
@@ -66,7 +66,7 @@ export function DataTable<T>({
               {columns.map((column, colIndex) => (
                 <td
                   key={column.id || column.accessorKey || colIndex}
-                  className="whitespace-nowrap px-4 py-3"
+                  className="whitespace-nowrap px-4 py-2"
                 >
                   {column.cell
                     ? column.cell({ row: { original: row } })

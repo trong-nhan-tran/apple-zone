@@ -12,6 +12,7 @@ import { StockInputType, StockWithDetails } from "@/schemas";
 import { stockInputSchema } from "@/schemas/stock-schema";
 import SelectWithSearch from "@/components/ui-custom/select-with-search";
 import CustomInput from "@/components/ui-custom/input-custom";
+import FormActions from "@/components/ui-custom/form-actions";
 
 type StockFormProps = {
   open: boolean;

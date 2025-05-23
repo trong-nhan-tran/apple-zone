@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui-shadcn/button";
 import * as React from "react";
 import { toast } from "react-hot-toast";
+import FormActions from "@/components/ui-custom/form-actions";
 
 import {
   BannerInputType,
@@ -205,8 +206,7 @@ const BannerFormModal = ({
               label="Banner"
               onFileChange={handleBannerChange}
               folder="banners"
-              previewHeight="h-[180px]"
-              previewWidth="w-full"
+              size="w-full h-[180px]"
             />
           </div>
 
@@ -232,28 +232,11 @@ const BannerFormModal = ({
           />
 
           {/* Action Buttons */}
-          <div className="flex justify-end gap-4 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpen(false)}
-              disabled={loading}
-            >
-              Huỷ
-            </Button>
-            <Button
-              type="submit"
-              disabled={loading || loadingCategories}
-              className="relative"
-            >
-              {loading && (
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                </span>
-              )}
-              <span className={loading ? "opacity-0" : ""}>Lưu</span>
-            </Button>
-          </div>
+          <FormActions
+            loading={loading || loadingCategories}
+            onCancel={() => setOpen(false)}
+            showCancel={true}
+          />
         </form>
       </Form>
     </SimpleModal>

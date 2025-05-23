@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/navbar-shop";
+import Footer from "@/components/layout/footer";
 // import { NavbarMobile } from "@/components/layout/navbar-mobile";
 
 export default function ShopLayout({
@@ -12,6 +13,7 @@ export default function ShopLayout({
       {/* <NavbarMobile></NavbarMobile> */}
 
       {children}
+      <Footer />
     </>
   );
 }

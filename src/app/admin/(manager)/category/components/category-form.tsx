@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui-shadcn/button";
 import * as React from "react";
 import { toast } from "react-hot-toast";
+import FormActions from "@/components/ui-custom/form-actions";
 
 import {
   CategoryInputType,
@@ -185,28 +186,11 @@ const CategoryFormModal = ({
             disabled={loading || loadingParents}
           />
 
-          <div className="flex justify-end gap-4 mt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpen(false)}
-              disabled={loading}
-            >
-              Huỷ
-            </Button>
-            <Button
-              type="submit"
-              disabled={loading || loadingParents}
-              className="relative"
-            >
-              {loading && (
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <i className="bi bi-arrow-repeat animate-spin text-white"></i>
-                </span>
-              )}
-              <span className={loading ? "opacity-0" : ""}>Lưu</span>
-            </Button>
-          </div>
+          <FormActions
+            loading={loading || loadingParents}
+            onCancel={() => setOpen(false)}
+            showCancel={true}
+          />
         </form>
       </Form>
     </SimpleModal>

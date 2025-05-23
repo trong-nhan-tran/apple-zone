@@ -9,6 +9,7 @@ import { Button } from "@/components/ui-shadcn/button";
 import CustomInput from "@/components/ui-custom/input-custom";
 import InputImage from "@/components/ui-custom/input-image";
 import SelectWithSearch from "@/components/ui-custom/select-with-search";
+import FormActions from "@/components/ui-custom/form-actions";
 import { generateSlug } from "@/libs/utils";
 import {
   ProductItemType,
@@ -219,103 +220,98 @@ export default function InfoSection({
     <div className="space-y-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CustomInput
-              control={form.control}
-              name="name"
-              label="Tên sản phẩm"
-              placeholder="Nhập tên sản phẩm con"
-              isRequired={true}
-              onChange={(e) => handleNameChange(e.target.value)}
-            />
+          <div>
+            <div className="flex flex-col lg:flex-row w-full gap-5">
+              <div className="w-full">
+                <SelectWithSearch
+                  control={form.control}
+                  name="product_id"
+                  label="Dòng sản phẩm"
+                  options={productOptions}
+                  isNumeric={true}
+                  title="Chọn dòng sản phẩm"
+                  isRequired={true}
+                  disabled={!!productId}
+                />
 
-            <CustomInput
-              control={form.control}
-              name="slug"
-              label="Slug"
-              placeholder="slug-san-pham"
-              isRequired={true}
-            />
+                <SelectWithSearch
+                  control={form.control}
+                  name="category_id"
+                  label="Danh mục con"
+                  options={categoryOptions}
+                  isNumeric={true}
+                  title="Chọn danh mục con"
+                  isRequired={true}
+                />
 
-            <SelectWithSearch
-              control={form.control}
-              name="product_id"
-              label="Dòng sản phẩm"
-              options={productOptions}
-              isNumeric={true}
-              title="Chọn dòng sản phẩm"
-              isRequired={true}
-              disabled={!!productId}
-            />
+                <CustomInput
+                  control={form.control}
+                  name="name"
+                  label="Tên sản phẩm"
+                  placeholder="Nhập tên sản phẩm con"
+                  isRequired={true}
+                  onChange={(e) => handleNameChange(e.target.value)}
+                />
 
-            <SelectWithSearch
-              control={form.control}
-              name="category_id"
-              label="Danh mục con"
-              options={categoryOptions}
-              isNumeric={true}
-              title="Chọn danh mục con"
-              isRequired={true}
-            />
+                <CustomInput
+                  control={form.control}
+                  name="slug"
+                  label="Slug"
+                  placeholder="slug-san-pham"
+                  isRequired={true}
+                />
+              </div>
+              <div className="flex justify-center lg:justify-start">
+                <InputImage
+                  control={form.control}
+                  name="thumbnail"
+                  label="Ảnh đại diện"
+                  folder="product-items"
+                  onFileChange={handleThumbnailChange}
+                  size="w-[240px] h-[240px]"
+                />
+              </div>
+            </div>
 
-            <CustomInput
-              control={form.control}
-              name="option_name"
-              label="Tên thuộc tính"
-              placeholder="Ví dụ: Dung lượng, Kích thước,..."
-              isRequired={true}
-            />
+            <div className="flex flex-col md:flex-row w-full gap-4 mt-4">
+              <div className="w-full md:w-1/3">
+                <CustomInput
+                  control={form.control}
+                  name="option_name"
+                  label="Tên thuộc tính"
+                  placeholder="Ví dụ: Dung lượng, Kích thước,..."
+                  isRequired={true}
+                />
+              </div>
 
-            <CustomInput
-              control={form.control}
-              name="option_value"
-              label="Giá trị thuộc tính"
-              placeholder="Ví dụ: 128GB, 14 inch,..."
-              isRequired={true}
-            />
+              <div className="w-full md:w-1/3">
+                <CustomInput
+                  control={form.control}
+                  name="option_value"
+                  label="Giá trị thuộc tính"
+                  placeholder="Ví dụ: 128GB, 14 inch,..."
+                  isRequired={true}
+                />
+              </div>
 
-            <CustomInput
-              control={form.control}
-              name="price"
-              label="Giá"
-              placeholder="Nhập giá sản phẩm"
-              type="number"
-              isRequired={true}
-            />
-
-            <div className="md:col-span-2">
-              <InputImage
-                control={form.control}
-                name="thumbnail"
-                label="Ảnh đại diện"
-                folder="product-items"
-                aspectRatio="4/3"
-                onFileChange={handleThumbnailChange}
-                previewHeight="h-[120px]"
-                previewWidth="w-[120px]"
-              />
+              <div className="w-full md:w-1/3">
+                <CustomInput
+                  control={form.control}
+                  name="price"
+                  label="Giá"
+                  placeholder="Nhập giá sản phẩm"
+                  type="number"
+                  isRequired={true}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4">
-            {setOpen && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setOpen(false)}
-              >
-                Hủy
-              </Button>
-            )}
-            <Button type="submit" disabled={loading} className="relative">
-              {loading && (
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <i className="bi bi-arrow-repeat animate-spin text-white"></i>
-                </span>
-              )}
-              <span className={loading ? "opacity-0" : ""}>Lưu</span>
-            </Button>
-          </div>
+          <FormActions
+            loading={loading}
+            onCancel={() => setOpen(false)}
+            showCancel={!!setOpen}
+          />
         </form>
       </Form>
     </div>
