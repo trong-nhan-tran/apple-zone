@@ -13,7 +13,7 @@ export default async function Home() {
     "mac",
     "ipad",
     "watch",
-    "tai-mghe",
+    "tai-nghe",
     "phu-kien",
   ];
   const categoryPromises = categorySlug.map((slug) =>
@@ -38,7 +38,7 @@ export default async function Home() {
       <ProductSlider name="iPad" products={iPadProducts}></ProductSlider>
       <ProductSlider name="Watch" products={watchProducts}></ProductSlider>
       <ProductSlider
-        name="AirPods"
+        name="Tai nghe"
         visibleLogo={false}
         products={airpodsProducts}
       ></ProductSlider>
